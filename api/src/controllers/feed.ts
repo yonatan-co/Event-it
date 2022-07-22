@@ -31,7 +31,8 @@ export default {
         err.status = 500;
       }
       next(err);
-    },
-    updateEvent: async (req: Request)
+    }
   },
+
+  updateEvent: async (req: Request, res: Response, next: NextFunction) => {},
 };

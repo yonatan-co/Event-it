@@ -8,6 +8,7 @@ import path from "path";
 
 import indexRouter from "./routes/index.route";
 import authRouter from "./routes/auth.route";
+import feedRouter from "./routes/feed.route";
 
 import errorHandler from "./controllers/error";
 
@@ -33,8 +34,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use(indexRouter);
 app.use(authRouter);
+app.use("/feed", feedRouter);
 app.use(errorHandler);
 
 mongoose

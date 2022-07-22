@@ -9,19 +9,24 @@ interface IEvent {
   contributers?: ObjectId[];
 }
 
-const EventSchema = new mongoose.Schema<IEvent>({
-  title: { type: String, required: true },
-  desc: { type: String, required: true },
-  creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
+const EventSchema = new mongoose.Schema<IEvent>(
+  {
+    title: { type: String, required: true },
+    desc: { type: String, required: true },
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    mainPhoto: { type: String, required: false },
+    photos: [{ type: String, required: false }],
+    contributers: [
+      { type: mongoose.Schema.Types.ObjectId, required: false, ref: "User" },
+    ],
   },
-  mainPhoto: { type: String, required: false },
-  photos: [{ type: String, required: false }],
-  contributers: [
-    { type: mongoose.Schema.Types.ObjectId, required: false, ref: "User" },
-  ],
-});
+  { timestamps: true }
+);
 
 const Event = mongoose.model("Event", EventSchema);
+
+export { Event };

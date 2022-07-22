@@ -5,8 +5,6 @@ const controller = require("../controllers/auth");
 // import controller from "../controllers/auth";
 const router = Router();
 
-console.log(controller);
-
 /**
  * @swagger
  * /auth/signup:
