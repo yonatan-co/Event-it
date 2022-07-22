@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import validator from "../middleware/validation";
+import validator from "../validation/userValidation";
 const controller = require("../controllers/auth");
 // import controller from "../controllers/auth";
 const router = Router();
