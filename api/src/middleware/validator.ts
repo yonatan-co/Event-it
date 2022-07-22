@@ -42,4 +42,11 @@ export default {
       .isLength({ min: 8 })
       .withMessage("password must be at least 8 characters"),
   ],
+  event: [
+    body("title").exists().withMessage("title is required"),
+    body("title").isLength({ min: 2 }).withMessage("enter a valid title"),
+
+    body("desc").exists().withMessage("descrption is required"),
+    body("title").isLength({ min: 2 }).withMessage("enter a valid descrption"),
+  ],
 };

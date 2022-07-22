@@ -1,4 +1,4 @@
-import { validationResult, ValidationError, Result } from "express-validator";
+import { validationResult } from "express-validator";
 import { hash, compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 
