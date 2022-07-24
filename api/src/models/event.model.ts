@@ -1,13 +1,40 @@
 import mongoose, { ObjectId } from "mongoose";
 
+interface IPoint {
+  type: {
+    type: string;
+    enum: ["Point"];
+  };
+  coordinates: {
+    type: [Number];
+  };
+}
+
+interface IPhoto {
+  photoUrl: string;
+  main: boolean;
+}
+
 interface IEvent {
   title: string;
   desc: string;
   creator: ObjectId;
-  mainPhoto?: string;
-  photos?: string[];
-  contributers?: ObjectId[];
+  location: IPoint;
+  date: Date;
+  photos?: IPhoto[];
 }
+
+const pointSchema = new mongoose.Schema<IPoint>({
+  type: {
+    type: String,
+    enum: ["Point"],
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+});
 
 const EventSchema = new mongoose.Schema<IEvent>(
   {
@@ -18,11 +45,8 @@ const EventSchema = new mongoose.Schema<IEvent>(
       required: true,
       ref: "User",
     },
-    mainPhoto: { type: String, required: false },
-    photos: [{ type: String, required: false }],
-    contributers: [
-      { type: mongoose.Schema.Types.ObjectId, required: false, ref: "User" },
-    ],
+    photos: [{ type: mongoose.Schema.Types.Array, required: false }],
+    location: { type: pointSchema, requried: true },
   },
   { timestamps: true }
 );

@@ -1,5 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import { validationResult } from "express-validator";
+import { ObjectId } from "mongoose";
 
 import { AutherizedRequest } from "../types/requests";
 
@@ -7,35 +8,42 @@ import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
 import { ServerError } from "../types/error";
 
-// note: these middlewares don't have authorazition yet.
+import { handle, isAuthorized, allowedToModify } from "../utils/error";
+
 export default {
   userEvents: async (
     req: AutherizedRequest,
     res: Response,
     next: NextFunction
   ) => {
-    // just for now.
-    const userId = "62d67d46d1b3181b92531de2";
-    const events = await EventToUser.find({ userId: userId }).populate(
-      "eventId"
-    );
-    if (!events) {
-      const err: ServerError = new Error("no events found");
-      err.status = 404;
-      throw err;
-    }
+    try {
+      isAuthorized(req);
 
-    res.status(200).json({
-      events: events,
-    });
+      const userId = req.userId;
+      const events = await EventToUser.find({ userId: userId }).populate(
+        "eventId"
+      );
+      if (!events) {
+        const err: ServerError = new Error("no events found");
+        err.status = 404;
+        throw err;
+      }
+
+      res.status(200).json({
+        events: events,
+      });
+    } catch (err: any) {
+      handle(next, err);
+    }
   },
   singleEvent: async (
     req: AutherizedRequest,
     res: Response,
     next: NextFunction
   ) => {
-    // just for now.
-    const userId = "62d67d46d1b3181b92531de2";
+    isAuthorized(req);
+
+    const userId = req.userId;
     const event = await EventToUser.find({
       userId: userId,
       eventId: req.params.eventId,
@@ -55,6 +63,8 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
+    isAuthorized(req);
+
     const errors = validationResult(req);
     try {
       if (!errors.isEmpty()) {
@@ -64,8 +74,7 @@ export default {
         throw error;
       }
 
-      // just for now.
-      const userId = "62d67d46d1b3181b92531de2";
+      const userId = req.userId;
       const newEvent = new Event({
         title: req.body.title,
         desc: req.body.desc,
@@ -84,10 +93,7 @@ export default {
         realtion: realtion,
       });
     } catch (err: any) {
-      if (!err.status) {
-        err.status = 500;
-      }
-      next(err);
+      handle(next, err);
     }
   },
 
@@ -97,6 +103,8 @@ export default {
     next: NextFunction
   ) => {
     try {
+      isAuthorized(req);
+
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const error: ServerError = new Error("Validation failed");
@@ -113,19 +121,18 @@ export default {
         error.status = 404;
         throw error;
       }
+
+      allowedToModify(req, event);
+
       event.title = req.body.title;
       event.desc = req.body.desc;
-      event.mainPhoto = req.body.mainPhoto;
       const updatedEvent = await event.save();
       res.status(200).json({
         message: "event updated",
         event: updatedEvent,
       });
     } catch (err: any) {
-      if (!err.status) {
-        err.status = 500;
-      }
-      next(err);
+      handle(next, err);
     }
   },
   deleteEvent: async (
@@ -133,6 +140,8 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
+    isAuthorized(req);
+
     const eventId = req.params.eventId;
     try {
       const event = await Event.findById(eventId);
@@ -142,15 +151,15 @@ export default {
         error.status = 404;
         throw error;
       }
-      Event.findByIdAndDelete(eventId);
+
+      allowedToModify(req, event);
+      await event.delete();
+      await EventToUser.deleteMany({ eventId: eventId });
       res.status(200).json({
         message: `event #${eventId} deleted`,
       });
     } catch (err: any) {
-      if (!err.status) {
-        err.status = 500;
-      }
-      next(err);
+      handle(next, err);
     }
   },
 };

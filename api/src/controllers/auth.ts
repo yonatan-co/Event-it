@@ -8,6 +8,8 @@ import { ServerError } from "../types/error";
 import { AuthRequest } from "../types/requests";
 import { NextFunction, Response } from "express";
 
+import { handle } from "../utils/error";
+
 export default {
   signup: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
@@ -41,10 +43,7 @@ export default {
         user: result,
       });
     } catch (err: any) {
-      if (!err.status) {
-        err.status = 500;
-      }
-      next(err);
+      handle(next, err);
     }
   },
   login: async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -72,17 +71,14 @@ export default {
           userId: user._id.toString(),
         },
         "somesupersecretsecret",
-        { expiresIn: "1h" }
+        { expiresIn: "24h" }
       );
       res.status(202).json({
         token: token,
         userId: user.id.toString(),
       });
     } catch (err: any) {
-      if (!err.status) {
-        err.status = 500;
-      }
-      next(err);
+      handle(next, err);
     }
   },
 };
