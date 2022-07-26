@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export default {
+export const userValidation = {
   signup: [
     body("email").exists().withMessage("email is required"),
     body("email").isEmail().withMessage("email is not valid"),
@@ -8,7 +8,7 @@ export default {
     body("username")
       .not()
       .isEmpty()
-      .withMessage("first name has to be longer then 2 charecters"),
+      .withMessage("username has to be longer then 2 charecters"),
     body("username").isLength({ min: 2 }).withMessage("first name is required"),
 
     body("phoneNum")
@@ -42,6 +42,16 @@ export default {
       .isLength({ min: 8 })
       .withMessage("password must be at least 8 characters"),
   ],
+  updateUser: [
+    body("username")
+      .not()
+      .isEmpty()
+      .withMessage("username has to be longer then 2 charecters"),
+    body("username").isLength({ min: 2 }).withMessage("first name is required"),
+  ],
+};
+
+export const eventValidator = {
   event: [
     body("title").exists().withMessage("title is required"),
     body("title").isLength({ min: 2 }).withMessage("enter a valid title"),

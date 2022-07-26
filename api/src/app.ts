@@ -1,15 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import swaggerJSDoc, { Options } from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
 import cors from "cors";
-import path from "path";
 
-import indexRouter from "./routes/index.route";
-import authRouter from "./routes/auth.route";
-import feedRouter from "./routes/feed.route";
-
+import indexRouter from "./routes/index.router";
+import authRouter from "./routes/auth.router";
+import feedRouter from "./routes/feed.router";
+import userRouter from "./routes/user.router";
 import errorHandler from "./controllers/error";
 
 const MONGO_DB_URI =
@@ -17,27 +14,14 @@ const MONGO_DB_URI =
 
 const app = express();
 
-const swaggerOptions: Options = {
-  swaggerDefinition: {
-    info: {
-      title: "the 'Event it' API",
-      description:
-        "A REST API built with Express and MongoDB. the backend for Event it",
-      version: "3.1.5",
-    },
-  },
-  apis: [path.join(__dirname, "routes/*.route.ts")],
-};
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+// using routers.
 app.use(indexRouter);
-app.use(authRouter);
+app.use("/auth", authRouter);
 app.use("/feed", feedRouter);
+app.use("/user", userRouter);
 app.use(errorHandler);
 
 mongoose

@@ -17,12 +17,22 @@ export function isAuthorized(req: AutherizedRequest): ServerError | void {
   }
 }
 
-export function allowedToModify(
+export function allowedToModifyEvent(
   req: AutherizedRequest,
   target: any
 ): ServerError | void {
   if (req.userId !== target.creator._id.toString()) {
     const error: ServerError = new Error("you cant modify other users events");
+    error.status = 403;
+    throw error;
+  }
+}
+export function allowedToModifyUser(
+  req: AutherizedRequest,
+  target: any
+): ServerError | void {
+  if (req.userId !== target._id.toString()) {
+    const error: ServerError = new Error("you cant modify other users");
     error.status = 403;
     throw error;
   }

@@ -1,6 +1,7 @@
 import index from "../controllers";
 import { Router } from "express";
 
+// just testing route.
 const router = Router();
 
 /**

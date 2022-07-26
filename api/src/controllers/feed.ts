@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from "express";
 import { validationResult } from "express-validator";
-import { ObjectId } from "mongoose";
 
 import { AutherizedRequest } from "../types/requests";
 
@@ -8,7 +7,11 @@ import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
 import { ServerError } from "../types/error";
 
-import { handle, isAuthorized, allowedToModify } from "../utils/error";
+import {
+  handle,
+  isAuthorized,
+  allowedToModifyEvent as allowedToModify,
+} from "../utils/error";
 
 export default {
   userEvents: async (
