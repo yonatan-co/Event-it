@@ -41,22 +41,26 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
-    isAuthorized(req);
+    try {
+      isAuthorized(req);
 
-    const userId = req.userId;
-    const event = await EventToUser.find({
-      userId: userId,
-      eventId: req.params.eventId,
-    }).populate("eventId");
-    if (!event) {
-      const err: ServerError = new Error("no events found");
-      err.status = 404;
-      throw err;
+      const userId = req.userId;
+      const event = await EventToUser.find({
+        userId: userId,
+        eventId: req.params.eventId,
+      }).populate("eventId");
+      if (!event) {
+        const err: ServerError = new Error("no events found");
+        err.status = 404;
+        throw err;
+      }
+
+      res.status(200).json({
+        events: event,
+      });
+    } catch (err) {
+      handle(next, err);
     }
-
-    res.status(200).json({
-      events: event,
-    });
   },
   createEvent: async (
     req: AutherizedRequest,
