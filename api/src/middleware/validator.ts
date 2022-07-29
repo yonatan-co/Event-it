@@ -20,14 +20,6 @@ export const userValidation = {
     body("password")
       .isLength({ min: 8 })
       .withMessage("password must be at least 8 characters"),
-
-    body("confiremdPassword").custom((value: string, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("password have to match!");
-      } else {
-        return true;
-      }
-    }),
   ],
   login: [
     body("email").exists().withMessage("email is required"),

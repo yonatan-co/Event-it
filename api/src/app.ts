@@ -17,6 +17,16 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 // using routers.
 app.use(indexRouter);
 app.use("/auth", authRouter);
@@ -27,7 +37,7 @@ app.use(errorHandler);
 mongoose
   .connect(MONGO_DB_URI)
   .then((result) => {
-    app.listen(3000);
+    app.listen(8080);
     console.log("server started!");
   })
   .catch((err) => console.log(err));
