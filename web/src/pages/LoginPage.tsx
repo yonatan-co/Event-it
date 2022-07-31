@@ -1,12 +1,13 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 
-import useError from "../hooks/useError";
+import useLogin from "../hooks/useLogin";
 
 import { AuthActions } from "../redux/isAuth";
 
-const LoginPage = () => {
+function LoginPage() {
   // global states;
   const isAuth = useSelector((state: any) => state.isAuth);
   const dispatch = useDispatch();
@@ -15,30 +16,22 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: any) => {
+  const HandleSubmit = async (e: any) => {
     e.preventDefault();
-    fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      const resData = await useLogin({
         email: email,
         password: password,
-      }),
-    })
-      .then((res) => {
-        const error: Error | boolean = useError(res);
-        if (error) {
-          throw error;
-        }
-        dispatch(AuthActions.login());
-        return res.json();
-      })
-      .then((resData) => {})
-      .catch((err) => console.log(err));
+      });
+      dispatch(AuthActions.login(resData.userId));
+      console.log(resData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form className="login" onSubmit={HandleSubmit}>
       <h3>Login</h3>
 
       <label>Email address:</label>
@@ -57,6 +50,6 @@ const LoginPage = () => {
       <button>Sign up</button>
     </form>
   );
-};
+}
 
 export default LoginPage;

@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ILoginAction } from "../types/redux";
 
-const initialState = { isAuth: false };
+const initialState = { isAuth: false, userId: null };
 
 const isAuthSlice = createSlice({
   name: "isAuth",
   initialState,
   reducers: {
-    login(state: any) {
+    login(state: any, action: any) {
       state.isAuth = true;
-      console.log(state.isAuth);
+      state.userId = action.payload;
+      console.log(state.userId);
     },
     logout(state: any) {
       state.isAuth = false;
