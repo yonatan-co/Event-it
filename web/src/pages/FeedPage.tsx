@@ -1,21 +1,17 @@
-import EventsList from "../components/EventList";
+import useEventList from "../hooks/useEventList";
 import { errorCheck } from "../utils/error";
 import { useSelector } from "react-redux";
 
-async function FeedPage() {
+function FeedPage() {
   try {
-    const token = useSelector((state: any) => state.token);
-    const res = await fetch("http://localhost:8080/events", {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+    useEventList().then((events) => {
+      console.log(events);
     });
-    errorCheck(res);
-    const resData = await res.json();
-    console.log(resData);
   } catch (err) {
     console.log(err);
   }
+
+  return <div>feed</div>;
 }
 
 export default FeedPage;

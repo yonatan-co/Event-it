@@ -93,11 +93,9 @@ export default {
         eventId: event._id,
         creator: true,
       });
-      const realtion = await eventToUser.save();
+      const relation = await eventToUser.save();
       res.status(201).json({
-        message: "Event created",
         event: event,
-        realtion: realtion,
       });
     } catch (err: any) {
       handle(next, err);

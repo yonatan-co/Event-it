@@ -19,7 +19,7 @@ const EventToUserSchema = new mongoose.Schema<IEventToUser>(
       ref: "Event",
       required: true,
     },
-    creator: { type: Boolean, required: true, default: true },
+    creator: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );
