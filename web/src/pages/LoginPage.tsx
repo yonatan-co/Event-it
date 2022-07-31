@@ -1,5 +1,8 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import useError from "../hooks/useError";
 
 import { AuthActions } from "../redux/isAuth";
 
@@ -23,9 +26,11 @@ const LoginPage = () => {
       }),
     })
       .then((res) => {
-        if (res.ok) {
-          dispatch(AuthActions.login());
+        const error: Error | boolean = useError(res);
+        if (error) {
+          throw error;
         }
+        dispatch(AuthActions.login());
         return res.json();
       })
       .then((resData) => {})
