@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ILoginAction } from "../types/redux";
 
-const initialState = { isAuth: false, userId: null };
+const initialState = { isAuth: false, token: null };
 
 const isAuthSlice = createSlice({
   name: "isAuth",

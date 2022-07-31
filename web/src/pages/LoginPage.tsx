@@ -1,17 +1,8 @@
-import * as React from "react";
 import { useState } from "react";
-
-import { useSelector, useDispatch } from "react-redux";
 
 import useLogin from "../hooks/useLogin";
 
-import { AuthActions } from "../redux/isAuth";
-
 function LoginPage() {
-  // global states;
-  const isAuth = useSelector((state: any) => state.isAuth);
-  const dispatch = useDispatch();
-
   // local states;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +14,6 @@ function LoginPage() {
         email: email,
         password: password,
       });
-      dispatch(AuthActions.login(resData.userId));
       console.log(resData);
     } catch (err) {
       console.log(err);

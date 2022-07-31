@@ -1,7 +1,7 @@
 import { ServerError } from "../../../api/src/types/error";
 
 export interface IResponse extends Response {
-  error?: Error;
+  error?: ServerError;
 }
 
 export interface LoginResponse extends IResponse {
