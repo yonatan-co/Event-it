@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { ILoginAction } from "../types/redux";
-import isAuthSlice from "./Auth";
 
-import { AuthActions } from "./Auth";
+import isAuthSlice from "./AuthSlice";
+import eventsSlice from "./EventsSlice";
+
+import { AuthActions } from "./AuthSlice";
 
 const authMiddleware =
   (store: any) => (next: any) => (action: ILoginAction) => {
@@ -21,6 +23,7 @@ const authMiddleware =
 const store = configureStore({
   reducer: {
     isAuth: isAuthSlice.reducer,
+    events: eventsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authMiddleware),

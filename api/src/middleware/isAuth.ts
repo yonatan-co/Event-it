@@ -15,7 +15,6 @@ export default (req: AutherizedRequest, _: unknown, next: NextFunction) => {
       throw error;
     }
     const token = authHeader.split(" ")[1];
-    console.log(token);
     let decodedToken;
     decodedToken = jwt.verify(token, "somesupersecretsecret") as JwtPayload;
     if (!decodedToken) {

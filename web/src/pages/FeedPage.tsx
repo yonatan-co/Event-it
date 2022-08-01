@@ -1,17 +1,24 @@
-import useEventList from "../hooks/useEventList";
-import { errorCheck } from "../utils/error";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useFeed from "../hooks/useFeed";
+import { EventsActions } from "../redux/EventsSlice";
 
 function FeedPage() {
-  try {
-    useEventList().then((events) => {
-      console.log(events);
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  useFeed();
+  const [events, setEvents] = useState();
 
-  return <div>feed</div>;
+  useEffect(() => {});
+
+  return (
+    <div className="EventList">
+      <h1>events</h1>
+      {events.map((event: any) => (
+        <div className="event-preview" key={event.id}>
+          <h4>{event.eventId.creator}</h4>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default FeedPage;

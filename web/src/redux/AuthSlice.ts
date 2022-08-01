@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ILoginAction } from "../types/redux";
 
 const initialState = { isAuth: false, token: null };
 
