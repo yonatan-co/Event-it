@@ -1,9 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthActions } from "../redux/Auth";
 import { errorCheck } from "../utils/error";
+
+interface TokenState {
+  isAuth: boolean;
+  token: string;
+}
 
 const useEventsList = async () => {
   try {
-    const token = useSelector((state: any) => state.token);
+    const token = localStorage.getItem("token");
     console.log(token);
     const res = await fetch("http://localhost:8080/feed/events", {
       headers: {

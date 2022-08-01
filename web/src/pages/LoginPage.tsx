@@ -7,10 +7,12 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const login = useLogin();
+
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const resData = await useLogin({
+      const resData = await login({
         email: email,
         password: password,
       });

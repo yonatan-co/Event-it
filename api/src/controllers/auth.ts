@@ -71,7 +71,7 @@ export default {
           userId: user._id.toString(),
         },
         "somesupersecretsecret",
-        { expiresIn: "24h" }
+        { expiresIn: "1h" }
       );
       res.status(202).json({
         token: token,

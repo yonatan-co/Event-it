@@ -8,21 +8,24 @@ interface IBody {
   password: string;
 }
 
-const useLogin = async (body: IBody) => {
+const useLogin = () => {
   const dispatch = useDispatch();
-  try {
-    const res = (await fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })) as IResponse;
-    errorCheck(res);
-    const resData = await res.json();
-    dispatch(AuthActions.login(resData.token));
-    return resData;
-  } catch (err) {
-    console.log(err);
-  }
+  const login = async (body: IBody) => {
+    try {
+      const res = (await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })) as IResponse;
+      errorCheck(res);
+      const resData = await res.json();
+      dispatch(AuthActions.login(resData.token));
+      return resData;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return login;
 };
 
 export default useLogin;
