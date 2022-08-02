@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { events: null };
+const initialState = { events: [] };
 
 const eventsSlice = createSlice({
   name: "events",

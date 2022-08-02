@@ -15,7 +15,7 @@ interface IPhoto {
   main: boolean;
 }
 
-interface IEvent {
+export interface IEvent {
   title: string;
   desc: string;
   creator: ObjectId;
