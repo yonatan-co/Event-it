@@ -1,4 +1,4 @@
-import useFeed from "../hooks/useEventList";
+import useFeed from "../hooks/useFeed";
 
 function FeedPage() {
   const globalEvents = useFeed();
