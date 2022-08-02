@@ -1,7 +1,7 @@
 import { IResponse } from "../types/response";
 import { errorCheck } from "../utils/error";
 import { useDispatch } from "react-redux";
-import { AuthActions } from "../redux/AuthSlice";
+import { AuthActions } from "../redux/auth-slice";
 
 interface IBody {
   email: string;

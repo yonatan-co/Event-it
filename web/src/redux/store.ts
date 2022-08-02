@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { ILoginAction } from "../types/redux";
 
-import isAuthSlice from "./AuthSlice";
-import eventsSlice from "./EventsSlice";
+import isAuthSlice from "./auth-slice";
+import eventsSlice from "./events-slice";
 
-import { AuthActions } from "./AuthSlice";
+import { AuthActions } from "./auth-slice";
 
 const authMiddleware =
   (store: any) => (next: any) => (action: ILoginAction) => {
