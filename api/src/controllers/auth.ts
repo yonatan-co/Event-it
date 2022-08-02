@@ -73,6 +73,8 @@ export default {
         "somesupersecretsecret",
         { expiresIn: "1h" }
       );
+      user.token = token;
+      user.save();
       res.status(202).json({
         token: token,
         userId: user.id.toString(),

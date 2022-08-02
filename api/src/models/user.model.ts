@@ -7,6 +7,7 @@ interface IUser {
   profilePictureUrl?: string;
   password: string;
   admin: boolean;
+  token?: string;
 }
 
 const userSchema = new mongoose.Schema<IUser>(
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema<IUser>(
     profilePictureUrl: { type: String, required: false },
     password: { type: String, required: true },
     admin: { type: Boolean, default: false },
+    token: { type: String, required: false },
   },
   { timestamps: true }
 );
