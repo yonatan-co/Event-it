@@ -5,28 +5,30 @@ import { EventsActions } from "../redux/EventsSlice";
 
 function FeedPage() {
   const dispatch = useDispatch();
-  const [events, setEvents] = useState([]);
+  const globalEvents = useSelector((state: any) => state.events);
   const token = localStorage.getItem("token");
-  fetch("http://localhost:8080/feed/events", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  })
-    .then((res) => {
-      return res.json();
+  useEffect(() => {
+    fetch("http://localhost:8080/feed/events", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-    .then((resData) => {
-      dispatch(EventsActions.fetchEvents(resData.events));
-      setEvents(resData.events);
-    });
+      .then((res) => {
+        return res.json();
+      })
+      .then((resData) => {
+        dispatch(EventsActions.fetchEvents(resData));
+        console.log(globalEvents);
+      });
+  }, []);
 
   return (
     <div className="EventList">
       <h1>events</h1>
-      {events &&
-        events.map((event: any) => (
+      {globalEvents &&
+        globalEvents.map((event: any) => (
           <div className="event-preview" key={event._id}>
             <h4>{event.eventId.title}</h4>
             <h4>{event.userId}</h4>

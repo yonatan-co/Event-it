@@ -9,8 +9,8 @@ import feedRouter from "./routes/feed.router";
 import userRouter from "./routes/user.router";
 import errorHandler from "./controllers/error";
 
-const MONGO_DB_URI =
-  "mongodb+srv://yonco:1234@event-it.hdu83.mongodb.net/EventIt?retryWrites=true&w=majority";
+import "dotenv/config";
+const MONGO_DB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@event-it.hdu83.mongodb.net/EventIt?retryWrites=true&w=majority`;
 
 const app = express();
 
