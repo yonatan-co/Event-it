@@ -1,9 +1,10 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
 
 function LoginPage() {
   // local states;
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +17,9 @@ function LoginPage() {
         email: email,
         password: password,
       });
-      console.log(resData);
+      if (resData) {
+        navigate("../feed", { replace: true });
+      }
     } catch (err) {
       console.log(err);
     }

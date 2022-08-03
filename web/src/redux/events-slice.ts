@@ -5,8 +5,6 @@ const eventsSlice = createSlice({
   initialState: [],
   reducers: {
     fetchEvents(state: any, { payload }: any) {
-      // state = { ...state, ...action.payload };
-      // console.log(state);
       return payload;
     },
     default(state: any) {

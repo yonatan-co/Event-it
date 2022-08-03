@@ -2,9 +2,8 @@ import useFeed from "../hooks/useFeed";
 
 function FeedPage() {
   const globalEvents = useFeed();
-  useFeed();
   return (
-    <div className="event-preview">
+    <div className="homepage">
       <h1>events</h1>
       {globalEvents &&
         globalEvents.map((event: any) => (
