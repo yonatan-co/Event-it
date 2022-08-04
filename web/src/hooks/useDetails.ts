@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { detailsActions } from "../redux/details-slice";
 
 import { EventState } from "../types/states";
 
 const useDetails = () => {
-  const [data, setData] = useState<EventState>();
+  // const [data, setData] = useState<EventState>();
+  const dispatch = useDispatch();
+  const details = useSelector((state: any) => state.details);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,7 +31,8 @@ const useDetails = () => {
         })
         .then((data) => {
           setIsPending(false);
-          setData(data);
+          // setData(data);
+          dispatch(detailsActions.setDetails(data));
           setError(null);
         })
         .catch((err) => {
@@ -45,7 +50,7 @@ const useDetails = () => {
     return () => abortCont.abort();
   }, []);
 
-  return { data, isPending, error };
+  return { data: details, isPending, error };
 };
 
 export default useDetails;

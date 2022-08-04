@@ -1,7 +1,7 @@
 import { IResponse } from "../types/response";
-import { errorCheck } from "../utils/error";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../redux/auth-slice";
+import { useState } from "react";
 
 interface IBody {
   email: string;
@@ -9,6 +9,7 @@ interface IBody {
 }
 
 const useLogin = () => {
+  const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const login = async (body: IBody) => {
     try {
@@ -17,12 +18,13 @@ const useLogin = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })) as IResponse;
-      errorCheck(res);
       const resData = await res.json();
       dispatch(AuthActions.login(resData.token));
-      return resData;
-    } catch (err) {
-      console.log(err);
+      setSuccess(true);
+      return success;
+    } catch (err: any) {
+      setSuccess(false);
+      return success;
     }
   };
   return login;
