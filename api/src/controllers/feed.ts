@@ -7,11 +7,7 @@ import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
 import { ServerError } from "../types/error";
 
-import {
-  handle,
-  isAuthorized,
-  allowedToModifyEvent as allowedToModify,
-} from "../utils/error";
+import { handle, isAuthorized, allowedToModify } from "../utils/error";
 
 export default {
   userEvents: async (
@@ -20,7 +16,10 @@ export default {
     next: NextFunction
   ) => {
     try {
-      isAuthorized(req);
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
 
       const userId = req.userId;
       const events = await EventToUser.find({ userId: userId }).populate(
@@ -45,7 +44,10 @@ export default {
     next: NextFunction
   ) => {
     try {
-      isAuthorized(req);
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
 
       const eventId = req.params.eventId;
       const event = await Event.findById(eventId);
@@ -67,7 +69,10 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
-    isAuthorized(req);
+    const notAuthorized = await isAuthorized(req);
+    if (notAuthorized) {
+      throw notAuthorized;
+    }
 
     const errors = validationResult(req);
     try {
@@ -105,7 +110,10 @@ export default {
     next: NextFunction
   ) => {
     try {
-      isAuthorized(req);
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -142,7 +150,10 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
-    isAuthorized(req);
+    const notAuthorized = await isAuthorized(req);
+    if (notAuthorized) {
+      throw notAuthorized;
+    }
 
     const eventId = req.params.eventId;
     try {
@@ -154,7 +165,11 @@ export default {
         throw error;
       }
 
-      allowedToModify(req, event);
+      const error = allowedToModify(req, event);
+      if (error) {
+        throw error;
+      }
+
       await event.delete();
       await EventToUser.deleteMany({ eventId: eventId });
       res.status(200).json({

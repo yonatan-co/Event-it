@@ -1,11 +1,7 @@
 import { Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 
-import {
-  handle,
-  isAuthorized,
-  allowedToModifyUser as allowedToModify,
-} from "../utils/error";
+import { handle, isAuthorized, allowedToModify } from "../utils/error";
 
 import { User } from "../models/user.model";
 import { EventToUser } from "../models/eventToUser.model";
@@ -20,7 +16,10 @@ export default {
     next: NextFunction
   ) => {
     try {
-      isAuthorized(req);
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
 
       const userId = req.userId;
       const user = await User.findById(userId);
@@ -42,7 +41,10 @@ export default {
     next: NextFunction
   ) => {
     try {
-      isAuthorized(req);
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -61,7 +63,10 @@ export default {
         throw error;
       }
 
-      allowedToModify(req, user);
+      const error = allowedToModify(req, user);
+      if (error) {
+        throw error;
+      }
 
       user.username = req.body.username;
       const updateduser = await user.save();
@@ -78,7 +83,10 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
-    isAuthorized(req);
+    const notAuthorized = await isAuthorized(req);
+    if (notAuthorized) {
+      throw notAuthorized;
+    }
 
     const userId = req.params.userId;
     try {
@@ -90,7 +98,11 @@ export default {
         throw error;
       }
 
-      allowedToModify(req, user);
+      const error = allowedToModify(req, user);
+      if (error) {
+        throw error;
+      }
+
       await user.delete();
       await EventToUser.deleteMany({ eventId: userId });
       res.status(200).json({
