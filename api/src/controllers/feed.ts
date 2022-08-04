@@ -47,11 +47,8 @@ export default {
     try {
       isAuthorized(req);
 
-      const userId = req.userId;
-      const event = await EventToUser.find({
-        userId: userId,
-        eventId: req.params.eventId,
-      }).populate("eventId");
+      const eventId = req.params.eventId;
+      const event = await Event.findById(eventId);
       if (!event) {
         const err: ServerError = new Error("no events found");
         err.status = 404;
@@ -59,7 +56,7 @@ export default {
       }
       // console.log(event);
       res.status(200).json({
-        events: event,
+        event: event,
       });
     } catch (err) {
       handle(next, err);
