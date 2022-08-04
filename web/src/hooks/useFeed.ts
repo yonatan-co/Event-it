@@ -6,7 +6,7 @@ import { EventsActions } from "../redux/events-slice";
 const useFeed = () => {
   let event;
   const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(Error(undefined));
   const dispatch = useDispatch();
   const events = useSelector((state: any) => state.events) as [];
   const token = localStorage.getItem("token");
@@ -19,14 +19,17 @@ const useFeed = () => {
       },
     })
       .then((res) => {
+        if (!res.ok) {
+          throw new Error("failed to load the feed");
+        }
         return res.json();
       })
       .then((data) => {
         setIsPending(false);
         dispatch(EventsActions.fetchEvents(data.events));
-        setError(null);
+        setError(Error(undefined));
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         setIsPending(false);
         setError(err);
         // console.log(err)
