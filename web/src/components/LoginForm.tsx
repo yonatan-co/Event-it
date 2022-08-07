@@ -7,20 +7,29 @@ import useLogin from "../hooks/useLogin";
 export function LoginForm() {
   // local states;
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const login = useLogin();
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
 
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
     const success = await login({
-      email: email,
-      password: password,
+      email: state.email,
+      password: state.password,
     });
 
     if (success) {
       navigate("/feed");
     }
+  };
+
+  const HandleChange = (e: any) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -31,14 +40,16 @@ export function LoginForm() {
         <label>Email address:</label>
         <input
           type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          name="email"
+          onChange={(e) => HandleChange(e)}
+          value={state.email}
         />
         <label>Password:</label>
         <input
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          name="password"
+          onChange={(e) => HandleChange(e)}
+          value={state.password}
         />
 
         <button>Sign up</button>

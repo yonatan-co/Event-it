@@ -8,9 +8,6 @@ export function SignupForm() {
   // local signup states;
   const signup = useSignup();
   const nevigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUsername] = useState("");
 
   const [state, setState] = useState({
     email: "",
@@ -21,9 +18,9 @@ export function SignupForm() {
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
     const { success, data } = await signup({
-      email: email,
-      username: userName,
-      password: password,
+      email: state.email,
+      username: state.userName,
+      password: state.password,
     });
 
     if (success) {

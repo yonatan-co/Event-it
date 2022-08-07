@@ -85,7 +85,7 @@ export default {
       const userId = req.userId;
       const newEvent = new Event({
         title: req.body.title,
-        desc: req.body.desc,
+        desc: req.body.descraption,
         creator: userId,
       });
       const event = await newEvent.save();

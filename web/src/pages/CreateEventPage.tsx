@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function CreateEventPage() {
   const [state, setState] = useState({
@@ -7,6 +8,23 @@ function CreateEventPage() {
     date: new Date().toISOString().slice(0, 10),
     location: "",
   });
+  const token = localStorage.getItem("token");
+  const HandleSubmit = (e: any) => {
+    e.preventDefault();
+    fetch("http://localhost:8080/feed/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        title: state.title,
+        descraption: state.descraption,
+        date: state.date,
+        location: state.location,
+      }),
+    });
+  };
 
   const HandleChange = (e: any) => {
     setState({
@@ -18,7 +36,7 @@ function CreateEventPage() {
 
   return (
     <div className="create-event">
-      <form>
+      <form onSubmit={HandleSubmit}>
         <h2> create new event </h2>
         <label>title</label>
         <input
@@ -30,11 +48,26 @@ function CreateEventPage() {
           }}
         />
         <label>descraption</label>
-        <input type="text" value={state.descraption} />
+        <input
+          type="text"
+          name="descraption"
+          onChange={(e: any) => HandleChange(e)}
+          value={state.descraption}
+        />
         <label>date</label>
-        <input type="date" value={state.date} />
+        <input
+          type="date"
+          name="date"
+          onChange={(e: any) => HandleChange(e)}
+          value={state.date}
+        />
         <label>location</label>
-        <input type="text" value={state.location} />
+        <input
+          type="text"
+          name="location"
+          onChange={(e: any) => HandleChange(e)}
+          value={state.location}
+        />
         <button className="submit-btn" type="submit">
           shoot
         </button>
