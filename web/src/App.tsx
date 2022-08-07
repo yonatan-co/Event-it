@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import FeedPage from "./pages/FeedPage";
 import HomePage from "./pages/HomePage";
 import EventDetails from "./pages/EventDetails";
+import CreateEventPage from "./pages/CreateEventPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/feed/event/:id" element={<EventDetails />} />
+        <Route path="/feed/create-event" element={<CreateEventPage />} />
       </Routes>
     </React.Fragment>
   );
