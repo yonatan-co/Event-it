@@ -9,9 +9,9 @@ function CreateEventPage() {
     location: "",
   });
   const token = localStorage.getItem("token");
-  const HandleSubmit = (e: any) => {
+  const HandleSubmit = async (e: any) => {
     e.preventDefault();
-    fetch("http://localhost:8080/feed/create", {
+    const res = await fetch("http://localhost:8080/feed/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,6 +24,8 @@ function CreateEventPage() {
         location: state.location,
       }),
     });
+    const data = await res.json();
+    console.log(data);
   };
 
   const HandleChange = (e: any) => {

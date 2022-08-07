@@ -85,7 +85,7 @@ export default {
       const userId = req.userId;
       const newEvent = new Event({
         title: req.body.title,
-        desc: req.body.descraption,
+        descraption: req.body.descraption,
         creator: userId,
       });
       const event = await newEvent.save();
@@ -134,7 +134,7 @@ export default {
       allowedToModify(req, event);
 
       event.title = req.body.title;
-      event.desc = req.body.desc;
+      event.descraption = req.body.desc;
       const updatedEvent = await event.save();
       res.status(200).json({
         message: "event updated",

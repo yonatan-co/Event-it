@@ -17,7 +17,7 @@ interface IPhoto {
 
 export interface IEvent {
   title: string;
-  desc: string;
+  descraption: string;
   creator: ObjectId;
   location: string;
   date: Date;
@@ -39,7 +39,7 @@ export interface IEvent {
 const EventSchema = new mongoose.Schema<IEvent>(
   {
     title: { type: String, required: true },
-    desc: { type: String, required: true },
+    descraption: { type: String, required: true },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
