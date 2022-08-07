@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EventsActions } from "../redux/events-slice";
 
 const useFeed = () => {
-  let event;
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(Error(undefined));
   const dispatch = useDispatch();
   const events = useSelector((state: any) => state.events) as [];
+  const nevigate = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
     fetch("http://localhost:8080/feed/events", {
@@ -19,6 +19,9 @@ const useFeed = () => {
       },
     })
       .then((res) => {
+        if (res.status === 401) {
+          nevigate("/login");
+        }
         if (!res.ok) {
           throw new Error("failed to load the feed");
         }

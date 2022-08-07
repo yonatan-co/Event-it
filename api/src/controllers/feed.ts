@@ -56,7 +56,6 @@ export default {
         err.status = 404;
         throw err;
       }
-      // console.log(event);
       res.status(200).json({
         event: event,
       });

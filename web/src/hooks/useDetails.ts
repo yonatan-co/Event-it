@@ -4,7 +4,7 @@ import { detailsActions } from "../redux/details-slice";
 
 import { EventState } from "../types/states";
 
-const useDetails = () => {
+const useDetails = (id: string | undefined) => {
   // const [data, setData] = useState<EventState>();
   const dispatch = useDispatch();
   const details = useSelector((state: any) => state.details);
@@ -16,7 +16,7 @@ const useDetails = () => {
     const abortCont = new AbortController();
 
     setTimeout(() => {
-      fetch("http://localhost:8080/feed/events/62e79d84124c12e383484567", {
+      fetch("http://localhost:8080/feed/events/" + id, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,

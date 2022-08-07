@@ -26,7 +26,6 @@ export async function isAuthorized(
   }
   const token = authHeader.split(" ")[1];
   const user = await User.findById(req.userId);
-  console.log(token);
 
   if (!user) {
     const error: ServerError = new Error(
