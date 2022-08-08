@@ -37,7 +37,7 @@ const useFeed = () => {
         setError(err);
         // console.log(err)
       });
-  }, []);
+  }, [events]);
   return { events, isPending, error };
 };
 
