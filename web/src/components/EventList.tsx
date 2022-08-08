@@ -1,5 +1,8 @@
-import useFeed from "../hooks/useFeed";
 import { Link } from "react-router-dom";
+
+import DeleteButton from "./buttons/DeleteButton";
+
+import useFeed from "../hooks/useFeed";
 
 function FeedPage() {
   const { events, error, isPending } = useFeed();
@@ -13,6 +16,8 @@ function FeedPage() {
           <div className="event-preview" key={event._id}>
             <h4>{event.eventId.title}</h4>
             <h4>{event.userId}</h4>
+            <DeleteButton id={event.eventId._id.toString()} />
+            <button className="edit-btn">Edit</button>
           </div>
         ))}
       {error.message && (
