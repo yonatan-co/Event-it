@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 import { User } from "../models/user.model";
 
-import { ServerError } from "../types/error";
 import { AuthRequest } from "../types/requests";
 import { NextFunction, Response } from "express";
 
@@ -15,18 +14,14 @@ export default {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const error: ServerError = new Error("Validation failed");
-        error.status = 422;
-        error.data = errors.array();
+        const error: Error = new Error("Validation failed");
         throw error;
       }
 
       const emailInUse = await User.findOne({ email: req.body.email });
       if (emailInUse) {
-        const error: ServerError = new Error(
-          "user with this meail alredy exit"
-        );
-        error.status = 422;
+        const error: Error = new Error("user with this meail alredy exit");
+        error.name = "conflict";
         throw error;
       }
 
@@ -52,17 +47,16 @@ export default {
       const user = await User.findOne({ email: email });
 
       if (!user) {
-        const error: ServerError = new Error("no user with this email found!");
-        error.status = 401;
+        const error: Error = new Error("no user with this email found!");
         throw error;
       }
 
       const correct = await compare(req.body.password, user.password);
       if (!correct) {
-        const error: ServerError = new Error(
+        const error: Error = new Error(
           "either your email or password is incorrrect"
         );
-        error.status = 401;
+        error.name = "Unauthorized";
         throw error;
       }
       const token = jwt.sign(

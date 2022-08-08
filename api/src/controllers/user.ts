@@ -6,7 +6,6 @@ import { handle, isAuthorized, allowedToModify } from "../utils/error";
 import { User } from "../models/user.model";
 import { EventToUser } from "../models/eventToUser.model";
 
-import { ServerError } from "../types/error";
 import { AutherizedRequest } from "../types/requests";
 
 export default {
@@ -24,14 +23,13 @@ export default {
       const userId = req.userId;
       const user = await User.findById(userId);
       if (!user) {
-        const err: ServerError = new Error("no user found");
-        err.status = 404;
-        throw err;
+        const error: Error = new Error("no user found");
+        throw error;
       }
       res.status(200).json({
         user: user,
       });
-    } catch (err) {
+    } catch (err: any) {
       handle(next, err);
     }
   },
@@ -48,9 +46,8 @@ export default {
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const error: ServerError = new Error("Validation failed");
-        error.status = 422;
-        error.data = errors.array();
+        const error: Error = new Error("Validation failed");
+        error.name = "ValidationFailed";
         throw error;
       }
 
@@ -58,8 +55,8 @@ export default {
       const user = await User.findById(userId);
 
       if (!user) {
-        const error: ServerError = new Error("no event found");
-        error.status = 404;
+        const error: Error = new Error("no event found");
+        error.name = "NotFound";
         throw error;
       }
 
@@ -93,8 +90,8 @@ export default {
       const user = await User.findById(userId);
 
       if (!user) {
-        const error: ServerError = new Error("no event found");
-        error.status = 404;
+        const error: Error = new Error("no event found");
+        error.name = "NotFound";
         throw error;
       }
 

@@ -1,10 +1,7 @@
-export interface ServerError extends Error {
-  status?: number;
-  data?: any[];
-}
+import { ValidationError } from "express-validator";
 
 type ErrorRequestHandler = (
-  err: any,
+  err: Error,
   req: Request,
   res: Response,
   next: NextFunction

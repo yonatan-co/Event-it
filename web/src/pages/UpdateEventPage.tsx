@@ -1,9 +1,8 @@
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
-import useCreateEvent from "../hooks/useCreateEvent";
-
-function CreateEventForm() {
+function UpdateEventPage() {
   const navigate = useNavigate();
   const [state, setState] = useState({
     title: "",
@@ -12,7 +11,7 @@ function CreateEventForm() {
     location: "",
   });
   const HandleSubmit = async (_e: any) => {
-    const success = await useCreateEvent(state);
+    const res = await fetch("http://localhost:8080/");
 
     navigate("/feed");
   };
@@ -66,5 +65,4 @@ function CreateEventForm() {
     </div>
   );
 }
-
-export default CreateEventForm;
+export default UpdateEventPage;

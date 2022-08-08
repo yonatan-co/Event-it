@@ -1,5 +1,6 @@
 import mongoose, { ObjectId } from "mongoose";
 
+import { IEvent } from "../types/types";
 // interface IPoint {
 //   type: {
 //     type: string;
@@ -9,20 +10,6 @@ import mongoose, { ObjectId } from "mongoose";
 //     type: [Number];
 //   };
 // }
-
-interface IPhoto {
-  photoUrl: string;
-  main: boolean;
-}
-
-export interface IEvent {
-  title: string;
-  descraption: string;
-  creator: ObjectId;
-  location: string;
-  date: Date;
-  photos?: IPhoto[];
-}
 
 // const pointSchema = new mongoose.Schema<IPoint>({
 //   type: {

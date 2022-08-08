@@ -5,7 +5,6 @@ import { AutherizedRequest } from "../types/requests";
 
 import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
-import { ServerError } from "../types/error";
 
 import { handle, isAuthorized, allowedToModify } from "../utils/error";
 
@@ -26,9 +25,9 @@ export default {
         "eventId"
       );
       if (!events) {
-        const err: ServerError = new Error("no events found");
-        err.status = 404;
-        throw err;
+        res.status(200).json({
+          events: [],
+        });
       }
 
       res.status(200).json({
@@ -52,14 +51,14 @@ export default {
       const eventId = req.params.eventId;
       const event = await Event.findById(eventId);
       if (!event) {
-        const err: ServerError = new Error("no events found");
-        err.status = 404;
-        throw err;
+        const error: Error = new Error("no events found");
+        error.name = "NotFound";
+        throw error;
       }
       res.status(200).json({
         event: event,
       });
-    } catch (err) {
+    } catch (err: any) {
       handle(next, err);
     }
   },
@@ -76,9 +75,8 @@ export default {
     const errors = validationResult(req);
     try {
       if (!errors.isEmpty()) {
-        const error: ServerError = new Error("Validation failed");
-        error.status = 422;
-        error.data = errors.array();
+        const error: Error = new Error("Validation failed");
+        error.name = "ValidationFailed";
         throw error;
       }
 
@@ -116,9 +114,8 @@ export default {
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const error: ServerError = new Error("Validation failed");
-        error.status = 422;
-        error.data = errors.array();
+        const error: Error = new Error("Validation failed");
+        error.name = "ValidationFailed";
         throw error;
       }
 
@@ -126,8 +123,8 @@ export default {
       const event = await Event.findById(eventId);
 
       if (!event) {
-        const error: ServerError = new Error("no event found");
-        error.status = 404;
+        const error: Error = new Error("no event found");
+        error.name = "NotFound";
         throw error;
       }
 
@@ -159,8 +156,8 @@ export default {
       const event = await Event.findById(eventId);
 
       if (!event) {
-        const error: ServerError = new Error("no event found");
-        error.status = 404;
+        const error: Error = new Error("no event found");
+        error.name = "NotFound";
         throw error;
       }
 
