@@ -1,19 +1,52 @@
 import { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateEventPage() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState(new Error(undefined));
   const [state, setState] = useState({
     title: "",
     descraption: "",
     date: new Date().toISOString().slice(0, 10),
     location: "",
   });
-  const HandleSubmit = async (_e: any) => {
-    const res = await fetch("http://localhost:8080/");
+  const token = localStorage.getItem("token");
+  fetch("http://localhost:8080/feed/event/" + id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((event) => {
+      setState({
+        title: event.eventId.title,
+        descraption: event.eventId.descraption,
+        date: event.eventId.date,
+        location: event.eventId.location,
+      });
+    })
+    .catch((err) => {
+      setError(err);
+    });
 
-    navigate("/feed");
+  const HandleSubmit = async (_e: any) => {
+    try {
+      const res = await fetch("http://localhost:8080/feed/update/" + id);
+      if (!res.ok) {
+        throw new Error("failed to update the event");
+      }
+      const data = await res.json();
+      console.log(data);
+      navigate("/feed");
+    } catch (err: any) {
+      setError(err);
+    }
   };
 
   const HandleChange = (e: any) => {

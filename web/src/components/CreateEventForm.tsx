@@ -5,6 +5,7 @@ import useCreateEvent from "../hooks/useCreateEvent";
 
 function CreateEventForm() {
   const navigate = useNavigate();
+  const createEvent = useCreateEvent();
   const [state, setState] = useState({
     title: "",
     descraption: "",
@@ -12,8 +13,9 @@ function CreateEventForm() {
     location: "",
   });
   const HandleSubmit = async (_e: any) => {
-    const success = await useCreateEvent(state);
-
+    _e.preventDefault();
+    console.log("we submit");
+    const data = await createEvent({ ...state });
     navigate("/feed");
   };
 

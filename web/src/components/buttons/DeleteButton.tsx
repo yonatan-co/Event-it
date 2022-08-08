@@ -27,7 +27,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ id }: DeleteButtonProps) => {
     }
   };
   return (
-    <button className="delete-btn" onClick={DeleteHandler}>
+    <button className="edit-btn" onClick={DeleteHandler}>
       Delete
     </button>
   );

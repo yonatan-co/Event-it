@@ -8,18 +8,14 @@ type ButtonProps = {
 
 const EditButton: FC<ButtonProps> = ({ id }: ButtonProps) => {
   const navigate = useNavigate();
-  const ClickHandler = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/feed/update/" + id);
-      if (!res.ok) {
-        throw new Error("something went wrong, please try again later");
-      }
-    } catch (error) {
-      navigate("/feed");
-      console.log(error);
-    }
+  const ClickHandler = () => {
+    navigate("/feed/update-event/" + id);
   };
-  return <button className="delete-btn">Delete</button>;
+  return (
+    <button className="delete-btn" onClick={ClickHandler}>
+      Edit
+    </button>
+  );
 };
 
 export default EditButton;

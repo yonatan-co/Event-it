@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import DeleteButton from "./buttons/DeleteButton";
+import EditButton from "./buttons/EditButtonForm";
 
 import useFeed from "../hooks/useFeed";
 
@@ -17,7 +18,7 @@ function FeedPage() {
             <h4>{event.eventId.title}</h4>
             <h4>{event.userId}</h4>
             <DeleteButton id={event.eventId._id.toString()} />
-            <button className="edit-btn">Edit</button>
+            <EditButton id={event.eventId._id.toString()} />
           </div>
         ))}
       {error.message && (

@@ -10,9 +10,6 @@ const eventsSlice = createSlice({
     default(state: any) {
       return state;
     },
-    fetchSingleEvent(state: any, { payload }: any) {
-      return state.filter((item: any) => item.eventId._id !== payload);
-    },
   },
 });
 
