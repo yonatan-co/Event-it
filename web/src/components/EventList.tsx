@@ -16,7 +16,6 @@ import useFeed from "../hooks/useFeed";
 
 function FeedPage() {
   const { events, error, isPending } = useFeed();
-
   return (
     <div className="homepage">
       {isPending && <div>Loading</div>}
@@ -40,7 +39,7 @@ function FeedPage() {
                 </TableCell>
                 <TableCell align="right">{event.eventId.descraption}</TableCell>
                 <TableCell align="right">{event.eventId.location}</TableCell>
-                <TableCell align="right">by: {event.creator}</TableCell>
+                <TableCell align="right">by: {event.userId.username}</TableCell>
                 <TableCell align="right">
                   <Stack spacing={2} direction="row">
                     <NavigateButton

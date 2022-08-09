@@ -21,9 +21,9 @@ export default {
       }
 
       const userId = req.userId;
-      const events = await EventToUser.find({ userId: userId }).populate(
-        "eventId"
-      );
+      const events = await EventToUser.find({ userId: userId })
+        .populate("eventId")
+        .populate("userId");
       if (!events) {
         res.status(200).json({
           events: [],

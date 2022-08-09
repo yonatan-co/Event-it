@@ -93,6 +93,9 @@ nav button {
   font-size: 1em;
 }
 
+.login-page .signup-page {
+  margin: auto;
+}
 /* auth forms */
 form.signup,
 form.login,
