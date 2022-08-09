@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -12,32 +12,43 @@ function UpdateEventPage() {
     date: new Date().toISOString().slice(0, 10),
     location: "",
   });
-  const token = localStorage.getItem("token");
-  fetch("http://localhost:8080/feed/event/" + id, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  })
-    .then((res) => {
-      return res.json();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:8080/feed/events/" + id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-    .then((event) => {
-      setState({
-        title: event.eventId.title,
-        descraption: event.eventId.descraption,
-        date: event.eventId.date,
-        location: event.eventId.location,
+      .then((res) => {
+        return res.json();
+      })
+      .then((event) => {
+        setState({
+          title: event.eventId.title,
+          descraption: event.eventId.descraption,
+          date: event.eventId.date,
+          location: event.eventId.location,
+        });
+      })
+      .catch((err) => {
+        setError(err);
       });
-    })
-    .catch((err) => {
-      setError(err);
-    });
+  }, []);
 
   const HandleSubmit = async (_e: any) => {
+    _e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/feed/update/" + id);
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:8080/feed/update/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(state),
+      });
       if (!res.ok) {
         throw new Error("failed to update the event");
       }

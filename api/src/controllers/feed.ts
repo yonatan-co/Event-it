@@ -121,7 +121,7 @@ export default {
 
       const eventId = req.params.eventId;
       const event = await Event.findById(eventId);
-
+      console.log(event);
       if (!event) {
         const error: Error = new Error("no event found");
         error.name = "NotFound";
@@ -131,7 +131,7 @@ export default {
       allowedToModify(req, event);
 
       event.title = req.body.title;
-      event.descraption = req.body.desc;
+      event.descraption = req.body.descraption;
       const updatedEvent = await event.save();
       res.status(200).json({
         message: "event updated",
