@@ -2,13 +2,15 @@ import { FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import Button from "@mui/material/Button";
+
 interface DeleteButtonProps {
   id: string;
 }
 
 const DeleteButton: FC<DeleteButtonProps> = ({ id }: DeleteButtonProps) => {
   const navigate = useNavigate();
-  const DeleteHandler = async (e: any) => {
+  const ClickHandler = async (e: any) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch("http://localhost:8080/feed/delete/" + id, {
@@ -27,9 +29,9 @@ const DeleteButton: FC<DeleteButtonProps> = ({ id }: DeleteButtonProps) => {
     }
   };
   return (
-    <button className="edit-btn" onClick={DeleteHandler}>
+    <Button variant="contained" onClick={ClickHandler}>
       Delete
-    </button>
+    </Button>
   );
 };
 
