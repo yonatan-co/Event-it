@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { EventsActions } from "../redux/events-slice";
@@ -6,6 +6,7 @@ import { EventsActions } from "../redux/events-slice";
 const useDelete = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const events = useSelector((state: any) => state.events);
   const token = localStorage.getItem("token");
   const deleteEvent = async (id: string | undefined) => {
     try {
@@ -19,9 +20,10 @@ const useDelete = () => {
       if (!res.ok) {
         throw new Error("something went wrong, please try again later");
       }
-      dispatch(EventsActions.deleteEvent(id));
+      const updateEvents = events.filter((event: any) => event._id === id);
+      console.log(updateEvents);
+      dispatch(EventsActions.fetchEvents(updateEvents));
     } catch (error) {
-      navigate("/feed");
       console.log(error);
     }
   };
