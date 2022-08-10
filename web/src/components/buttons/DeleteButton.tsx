@@ -8,32 +8,16 @@ import { EventsActions } from "../../redux/events-slice";
 
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useDelete from "../../hooks/useDelete";
 
 interface DeleteButtonProps {
   id: string;
 }
 
 const DeleteButton: FC<DeleteButtonProps> = ({ id }: DeleteButtonProps) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const deleteEvent = useDelete();
   const ClickHandler = async (e: any) => {
-    const token = localStorage.getItem("token");
-    try {
-      const res = await fetch("http://localhost:8080/feed/delete/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (!res.ok) {
-        throw new Error("something went wrong, please try again later");
-      }
-      dispatch(EventsActions.deleteEvent(id));
-    } catch (error) {
-      navigate("/feed");
-      console.log(error);
-    }
+    await deleteEvent(id);
   };
   return (
     <Button variant="contained" onClick={ClickHandler}>
