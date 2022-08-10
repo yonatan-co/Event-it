@@ -49,7 +49,6 @@ export default {
       }
 
       const eventId = req.params.eventId;
-      console.log(eventId);
       const event = await Event.findById(eventId);
       if (!event) {
         const error: Error = new Error("no events found");
@@ -122,7 +121,6 @@ export default {
 
       const eventId = req.params.eventId;
       const event = await Event.findById(eventId);
-      console.log(event);
       if (!event) {
         const error: Error = new Error("no event found");
         error.name = "NotFound";

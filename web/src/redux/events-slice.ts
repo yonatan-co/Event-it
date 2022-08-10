@@ -7,6 +7,9 @@ const eventsSlice = createSlice({
     fetchEvents(state: any, { payload }: any) {
       return payload;
     },
+    deleteEvent(state: any, { payload }: any) {
+      return state.filter((item: any) => item._id === payload);
+    },
     default(state: any) {
       return state;
     },
