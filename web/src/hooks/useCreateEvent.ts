@@ -1,19 +1,13 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-interface IBody {
-  title: string;
-  descraption: string;
-  date: string;
-  location: string;
-}
+import { EventRequestBody } from "../types/types";
 
 const useCreateEvent = () => {
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState();
+  const [data, setData] = useState();
   const token = localStorage.getItem("token");
-  const [success, setSuccess] = useState(false);
 
-  const createEvent = async (body: IBody) => {
+  const createEvent = async (body: EventRequestBody) => {
     console.log(token);
     try {
       const res = await fetch("http://localhost:8080/feed/create", {
@@ -24,13 +18,17 @@ const useCreateEvent = () => {
         },
         body: JSON.stringify(body),
       });
+      if (!res.ok) {
+        throw new Error("cannot create event");
+      }
       const data = await res.json();
-      setSuccess(true);
-      return success;
-    } catch (error) {
-      setSuccess(false);
+      setData(data);
+      return { data, error, isPending };
+    } catch (error: any) {
+      setIsPending(false);
+      setError(error);
       console.log(error);
-      return success;
+      return { data, error, isPending };
     }
   };
   return createEvent;

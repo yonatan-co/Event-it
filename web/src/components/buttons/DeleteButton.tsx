@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface DeleteButtonProps {
   id: string;
@@ -30,7 +31,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ id }: DeleteButtonProps) => {
   };
   return (
     <Button variant="contained" onClick={ClickHandler}>
-      Delete
+      <DeleteIcon />
     </Button>
   );
 };

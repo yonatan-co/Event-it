@@ -3,10 +3,10 @@ import SignupForm from "../components/SignupForm";
 
 function SignupPage() {
   return (
-    <div className="signup-page">
+    <>
       <Navbar />
       <SignupForm />;
-    </div>
+    </>
   );
 }
 

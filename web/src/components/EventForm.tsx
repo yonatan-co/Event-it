@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import useCreateEvent from "../hooks/useCreateEvent";
+import useUpdateEvent from "../hooks/useUpdateEvent";
 
-function CreateEventForm() {
+import { FormProps } from "../types/types";
+
+function CreateEventForm({ mode }: FormProps) {
   const navigate = useNavigate();
+  const { id } = useParams();
   const createEvent = useCreateEvent();
+  const updateEvent = useUpdateEvent();
   const [state, setState] = useState({
     title: "",
     descraption: "",
@@ -15,7 +20,12 @@ function CreateEventForm() {
   const HandleSubmit = async (_e: any) => {
     _e.preventDefault();
     console.log("we submit");
-    const data = await createEvent({ ...state });
+    if (mode === "POST") {
+      const { data, isPending } = await createEvent({ ...state });
+    } else {
+      const data = await updateEvent(id, { ...state });
+    }
+
     navigate("/feed");
   };
 

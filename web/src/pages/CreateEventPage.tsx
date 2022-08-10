@@ -1,13 +1,7 @@
-import CreateEventForm from "../components/CreateEventForm";
-import Navbar from "../components/Navbars/FeedNavbar";
+import CreateEventForm from "../components/EventForm";
 
 function CreateEventPage() {
-  return (
-    <div className="create-event">
-      <Navbar />
-      <CreateEventForm />;
-    </div>
-  );
+  return <CreateEventForm mode="POST" />;
 }
 
 export default CreateEventPage;

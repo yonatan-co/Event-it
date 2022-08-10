@@ -10,17 +10,17 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import DeleteButton from "./buttons/DeleteButton";
-import NavigateButton from "./buttons/NavigateButton";
+import EditButton from "./buttons/EditButton";
 
 import useFeed from "../hooks/useFeed";
+import ViewButton from "./buttons/ViewButton";
 
 function FeedPage() {
   const { events, error, isPending } = useFeed();
   return (
     <div className="homepage">
-      {isPending && <div>Loading</div>}
       {<h1>events</h1>}
-      {events.length < 1 && !error.message && (
+      {events.length < 1 && !error && (
         <div>
           <h3>no events (yet)</h3>
           <Link to="/feed/create-event">create one!</Link>
@@ -39,19 +39,10 @@ function FeedPage() {
                 </TableCell>
                 <TableCell align="right">{event.eventId.descraption}</TableCell>
                 <TableCell align="right">{event.eventId.location}</TableCell>
-                <TableCell align="right">by: {event.userId.username}</TableCell>
                 <TableCell align="right">
                   <Stack spacing={2} direction="row">
-                    <NavigateButton
-                      id={event.eventId._id}
-                      name="Edit"
-                      url="/feed/update-event/"
-                    />
-                    <NavigateButton
-                      id={event.eventId._id}
-                      name="View"
-                      url="/feed/event/"
-                    />
+                    <EditButton id={event.eventId._id} />
+                    <ViewButton id={event.eventId._id} />
                     <DeleteButton id={event.eventId._id} />
                   </Stack>
                 </TableCell>
@@ -60,12 +51,13 @@ function FeedPage() {
           </TableBody>
         </Table>
       </TableContainer>
-      {error.message && (
+      {error && (
         <div className="error">
-          <h2>{error.message}</h2>
+          <h2>{error}</h2>
           <Link to={"/login"}> go back to login</Link>
         </div>
       )}
+      {isPending && <div>Loading</div>}
     </div>
   );
 }

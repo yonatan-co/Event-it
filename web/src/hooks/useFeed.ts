@@ -5,7 +5,7 @@ import { EventsActions } from "../redux/events-slice";
 
 const useFeed = () => {
   const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(Error(undefined));
+  const [error, setError] = useState();
   const dispatch = useDispatch();
   const events = useSelector((state: any) => state.events) as [];
   const nevigate = useNavigate();
@@ -30,9 +30,9 @@ const useFeed = () => {
       .then((data) => {
         setIsPending(false);
         dispatch(EventsActions.fetchEvents(data.events));
-        setError(Error(undefined));
+        setError(undefined);
       })
-      .catch((err: Error) => {
+      .catch((err: any) => {
         setIsPending(false);
         setError(err);
         // console.log(err)
