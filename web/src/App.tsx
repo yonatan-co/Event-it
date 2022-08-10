@@ -8,6 +8,7 @@ import FeedPage from "./pages/FeedPage";
 import HomePage from "./pages/HomePage";
 import CreateEventPage from "./pages/CreateEventPage";
 import UpdateEventPage from "./pages/UpdateEventPage";
+import ViewEventPage from "./pages/ViewEventPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/feed/create-event" element={<CreateEventPage />} />
-
+        <Route path="/feed/view/:id" element={<ViewEventPage />} />
         <Route path="/feed/update-event/:id" element={<UpdateEventPage />} />
       </Routes>
     </React.Fragment>

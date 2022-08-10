@@ -49,6 +49,7 @@ export default {
       }
 
       const eventId = req.params.eventId;
+      console.log(eventId);
       const event = await Event.findById(eventId);
       if (!event) {
         const error: Error = new Error("no events found");
