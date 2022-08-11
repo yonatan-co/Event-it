@@ -40,14 +40,8 @@ app.use((req, res, next) => {
 // using routers.
 app.use(indexRouter);
 app.use("/auth", authRouter);
-app.use("/feed", feedRouter);
+app.use("/feed", upload.single("image"), feedRouter);
 app.use("/user", userRouter);
-app.post("/test", upload.single("image"), (req: any, res: any) => {
-  console.log(req.file);
-  res.json({
-    message: "hello",
-  });
-});
 app.use(errorHandler);
 
 mongoose

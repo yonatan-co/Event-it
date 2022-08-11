@@ -22,4 +22,6 @@ router.patch(
 
 router.delete("/delete/:eventId", isAuth, controller.deleteEvent);
 
+router.post("/upload", controller.uploadImage);
+
 export default router;

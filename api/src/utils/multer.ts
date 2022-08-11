@@ -1,8 +1,6 @@
 import { Request } from "express";
-import { Express } from "express";
 import multer, { FileFilterCallback } from "multer";
 
-import path from "path";
 import { v4 as uuid } from "uuid";
 
 // configurates how the files are gonna be stored

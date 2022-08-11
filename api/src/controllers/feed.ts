@@ -174,4 +174,31 @@ export default {
       handle(next, err);
     }
   },
+  uploadImage: async (
+    req: AutherizedRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const eventId = req.query.event;
+      const event = await Event.findById(eventId);
+
+      if (!event || event === null) {
+        const error = new Error("no event found");
+        error.name = "NotFound";
+        throw error;
+      }
+
+      const image = req.file;
+      if (image) {
+        event.photos?.push(image?.path);
+        const updatedEvent = await event.save();
+        res.json({
+          messgae: updatedEvent.photos,
+        });
+      }
+    } catch (error: any) {
+      handle(next, error);
+    }
+  },
 };
