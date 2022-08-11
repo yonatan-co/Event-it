@@ -1,23 +1,27 @@
 import { Request } from "express";
+import { Express } from "express";
 import multer, { FileFilterCallback } from "multer";
 
-import { DestinationCallback, FileNameCallback } from "../types/types";
+import path from "path";
+import { v4 as uuid } from "uuid";
 
-export const fileStorage = multer.diskStorage({
-  destination: (
-    request: Request,
+// configurates how the files are gonna be stored
+export const storage = multer.diskStorage({
+  destination: function (
+    req: Express.Request,
     file: Express.Multer.File,
-    callback: DestinationCallback
-  ): void => {
-    callback(null, "../uploads");
+    callback: (error: Error | null, destination: string) => void
+  ) {
+    callback(null, "uploads");
   },
-
-  filename: (
+  filename: function (
     req: Request,
     file: Express.Multer.File,
-    callback: FileNameCallback
-  ): void => {
-    callback(null, "");
+    callback: (error: Error | null, filename: string) => void
+  ) {
+    const guid = uuid();
+    const path = guid.replace(/:/g, "-");
+    callback(null, path);
   },
 });
 
