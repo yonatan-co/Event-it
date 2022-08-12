@@ -191,19 +191,18 @@ export default {
         throw error;
       }
 
-      const image = req.file;
-      if (!image) {
+      if (!req.file) {
         const error = new Error("no file supplied");
         error.name = "ValidationFailed";
         throw error;
       }
+      // console.log(req.file.path);
 
-      const photo = {
-        img: image?.path.replace("\\", "/"),
-        id: uuid(),
-      };
+      const photo = req.file.path;
+      console.log(photo);
+
       if (photo) {
-        event.photos?.push(photo);
+        event.photos?.push(photo.replace("\\", "/"));
         const updatedEvent = await event.save();
         res.json({
           messgae: updatedEvent.photos,

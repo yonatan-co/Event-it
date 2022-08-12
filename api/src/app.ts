@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 });
 
 console.log(__dirname);
-app.use(express.static("public"));
+app.use("/public", express.static("public"));
 
 // using routers.
 app.use(indexRouter);
