@@ -1,10 +1,15 @@
+interface IPhoto {
+  img: string;
+  id: string;
+}
+
 export interface IEvent {
   title: string;
   descraption: string;
   creator: ObjectId;
   location: string;
   date: Date;
-  photos?: string[];
+  photos?: IPhoto[];
 }
 
 // types for multer (file uploads).

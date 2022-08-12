@@ -17,6 +17,7 @@ import ViewButton from "./buttons/ViewButton";
 
 function FeedPage() {
   const { events, error, isPending } = useFeed();
+  console.log(events);
   return (
     <div className="homepage">
       {<h1>events</h1>}

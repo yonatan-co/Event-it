@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
+import path from "path";
 import multer from "multer";
 
 import indexRouter from "./routes/index.router";
@@ -36,6 +37,9 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+console.log(__dirname);
+app.use(express.static("public"));
 
 // using routers.
 app.use(indexRouter);

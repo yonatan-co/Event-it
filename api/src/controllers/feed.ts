@@ -6,6 +6,8 @@ import { AutherizedRequest } from "../types/requests";
 import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
 
+import { v1 as uuid } from "uuid";
+
 import { handle, isAuthorized, allowedToModify } from "../utils/error";
 
 export default {
@@ -190,8 +192,18 @@ export default {
       }
 
       const image = req.file;
-      if (image) {
-        event.photos?.push(image?.path);
+      if (!image) {
+        const error = new Error("no file supplied");
+        error.name = "ValidationFailed";
+        throw error;
+      }
+
+      const photo = {
+        img: image?.path.replace("\\", "/"),
+        id: uuid(),
+      };
+      if (photo) {
+        event.photos?.push(photo);
         const updatedEvent = await event.save();
         res.json({
           messgae: updatedEvent.photos,

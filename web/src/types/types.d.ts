@@ -12,3 +12,8 @@ export type EventRequestBody = {
 export type FormProps = {
   mode: string;
 };
+
+export type Photo = {
+  img: string;
+  id: string;
+};
