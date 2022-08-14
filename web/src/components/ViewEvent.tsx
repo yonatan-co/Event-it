@@ -1,8 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import useView from "../hooks/useView";
 
+import UploadImageButton from "./buttons/UploadImageButton";
+
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { Button } from "@mui/material";
 
 function ViewEvent() {
   const { id } = useParams();
@@ -12,6 +15,7 @@ function ViewEvent() {
   return (
     <div className="view-event">
       <h1>{data && data.event.title}</h1>
+      <UploadImageButton eventId={id} />
       {photos && (
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
           {photos.map((photo: string) => (

@@ -38,7 +38,6 @@ app.use((req, res, next) => {
   next();
 });
 
-console.log(__dirname);
 app.use("/public", express.static("public"));
 
 // using routers.

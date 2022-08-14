@@ -8,7 +8,7 @@ export function handle(next: NextFunction, err: Error): void {
 
 export async function isAuthorized(
   req: AutherizedRequest
-): Promise<Error | void> {
+): Promise<Error | undefined> {
   // if (!req.userId) {
   //   const error: Error = new Error("you need to be logged in to do this");
   //   error.name = "Unauthorized";;
@@ -25,9 +25,7 @@ export async function isAuthorized(
   const user = await User.findById(req.userId);
 
   if (!user) {
-    const error: Error = new Error(
-      "we have an error; please try to login again"
-    );
+    const error: Error = new Error("you need to be logged in to do this");
     error.name = "Unauthorized";
     throw error;
   }
@@ -37,9 +35,7 @@ export async function isAuthorized(
     return error;
   }
   if (user.token?.toString() !== token.toString()) {
-    const error: Error = new Error(
-      "we have an error; please try to login again"
-    );
+    const error: Error = new Error("you need to be logged in to do this");
     error.name = "Unauthorized";
     throw error;
   }

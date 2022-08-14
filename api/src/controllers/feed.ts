@@ -1,12 +1,12 @@
 import { NextFunction, Response, Request } from "express";
 import { validationResult } from "express-validator";
+import { join } from "path";
+import { unlink } from "fs";
 
 import { AutherizedRequest } from "../types/requests";
 
 import { Event } from "../models/event.model";
 import { EventToUser } from "../models/eventToUser.model";
-
-import { v1 as uuid } from "uuid";
 
 import { handle, isAuthorized, allowedToModify } from "../utils/error";
 
@@ -147,13 +147,13 @@ export default {
     res: Response,
     next: NextFunction
   ) => {
-    const notAuthorized = await isAuthorized(req);
-    if (notAuthorized) {
-      throw notAuthorized;
-    }
-
-    const eventId = req.params.eventId;
     try {
+      const notAuthorized = await isAuthorized(req);
+      if (notAuthorized) {
+        throw notAuthorized;
+      }
+
+      const eventId = req.params.eventId;
       const event = await Event.findById(eventId);
 
       if (!event) {
@@ -182,8 +182,26 @@ export default {
     next: NextFunction
   ) => {
     try {
+      if (!req.file) {
+        const error = new Error("no file supplied");
+        error.name = "ValidationFailed";
+        throw error;
+      }
+
+      // console.log(join(__dirname, "..", req.file.path));
+
+      // const notAuthorized = await isAuthorized(req);
+      // if (notAuthorized) {
+      //   throw notAuthorized;
+      // }
+
       const eventId = req.query.event;
       const event = await Event.findById(eventId);
+
+      // const error = allowedToModify(req, event);
+      // if (error) {
+      //   throw error;
+      // }
 
       if (!event || event === null) {
         const error = new Error("no event found");
@@ -191,11 +209,6 @@ export default {
         throw error;
       }
 
-      if (!req.file) {
-        const error = new Error("no file supplied");
-        error.name = "ValidationFailed";
-        throw error;
-      }
       // console.log(req.file.path);
 
       const photo = req.file.path;
