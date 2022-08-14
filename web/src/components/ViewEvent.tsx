@@ -1,21 +1,25 @@
+import { useState } from "react";
+
 import { useParams, Link } from "react-router-dom";
+
+import useUpload from "../hooks/useUpload";
 import useView from "../hooks/useView";
 
 import UploadImageButton from "./buttons/UploadImageButton";
 
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { Button } from "@mui/material";
 
 function ViewEvent() {
   const { id } = useParams();
   const { data, isPending, error } = useView(id);
-  const photos = data?.event.photos;
+
+  const [photos, setPhotos] = useState(data?.event.photos);
   console.log(photos);
   return (
     <div className="view-event">
       <h1>{data && data.event.title}</h1>
-      <UploadImageButton eventId={id} />
+      {id && <UploadImageButton onChange={useUpload} id={id} />}
       {photos && (
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
           {photos.map((photo: string) => (
