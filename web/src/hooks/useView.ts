@@ -53,7 +53,7 @@ const useView = (
 
     // abort the fetch
     return () => abortCont.abort();
-  }, []);
+  }, [data]);
 
   return { data, isPending, error };
 };
