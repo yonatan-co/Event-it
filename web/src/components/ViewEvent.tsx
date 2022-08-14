@@ -13,9 +13,8 @@ import ImageListItem from "@mui/material/ImageListItem";
 function ViewEvent() {
   const { id } = useParams();
   const { data, isPending, error } = useView(id);
+  const photos = data?.event.photos;
 
-  const [photos, setPhotos] = useState(data?.event.photos);
-  console.log(photos);
   return (
     <div className="view-event">
       <h1>{data && data.event.title}</h1>
