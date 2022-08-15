@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
-import Stack from "@mui/material/Stack";
+import styled from "styled-components";
 
+import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
 
 import DeleteButton from "./buttons/DeleteButton";
 import EditButton from "./buttons/EditButton";
@@ -16,12 +16,30 @@ import EditButton from "./buttons/EditButton";
 import useFeed from "../hooks/useFeed";
 import ViewButton from "./buttons/ViewButton";
 
+const Title = styled.h1`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CustomizedTableRow = styled(TableRow)`
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+  animation: fadeIn 1s ease 0s 1 normal forwards;
+`;
+
 function FeedPage() {
   const { events, error, isPending } = useFeed();
-  console.log(events);
   return (
     <div className="homepage">
-      {<h1>events</h1>}
+      <Title>events</Title>
       {events.length < 1 && !error && (
         <div>
           <h3>no events (yet)</h3>
@@ -33,7 +51,7 @@ function FeedPage() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableBody>
             {events.map((event: any) => (
-              <TableRow
+              <CustomizedTableRow
                 key={event.eventId._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -49,7 +67,7 @@ function FeedPage() {
                     <DeleteButton id={event.eventId._id} />
                   </Stack>
                 </TableCell>
-              </TableRow>
+              </CustomizedTableRow>
             ))}
           </TableBody>
         </Table>
