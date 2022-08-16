@@ -24,7 +24,7 @@ function UserDetails() {
           "& > :not(style)": {
             m: 1,
             width: 1000,
-            height: 900,
+            height: 450,
           },
         }}
       >
@@ -34,7 +34,6 @@ function UserDetails() {
             <div className="user-details">
               <Title>username: {data.user.username}</Title>
               <Title>email: {data.user.email}</Title>
-              {<DeleteButton id={data.user._id} target={"user"} />}
             </div>
           )}
         </Paper>
