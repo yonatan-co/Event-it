@@ -52,12 +52,10 @@ export default function TemporaryDrawer() {
         {userId && (
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemIcon
-                onClick={(e) =>
-                  navigate("http://localhost:8080/user/" + userId)
-                }
-              >
-                <PersonIcon />
+              <ListItemIcon>
+                <Link to={"/user/" + userId}>
+                  <PersonIcon />
+                </Link>
               </ListItemIcon>
               <ListItemText />
             </ListItemButton>
