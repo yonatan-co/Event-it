@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import { EventsActions } from "../redux/events-slice";
 
+import { DeleteTarget } from "../types/types";
+
 const useDelete = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const events = useSelector((state: any) => state.events);
   const token = localStorage.getItem("token");
-  const deleteEvent = async (id: string | undefined) => {
+  const deleteItem = async (id: string | undefined, target: DeleteTarget) => {
     try {
-      const res = await fetch("http://localhost:8080/feed/delete/" + id, {
+      const res = await fetch(`http://localhost:8080/${target}/delete/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +28,7 @@ const useDelete = () => {
       console.log(error);
     }
   };
-  return deleteEvent;
+  return deleteItem;
 };
 
 export default useDelete;

@@ -1,10 +1,18 @@
 import { useState } from "react";
+
+import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
+
+import Stack from "@mui/material/Stack";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 import useCreateEvent from "../hooks/useCreateEvent";
 import useUpdateEvent from "../hooks/useUpdateEvent";
 
 import { FormProps } from "../types/types";
+import { height } from "@mui/system";
 
 function CreateEventForm({ mode }: FormProps) {
   const navigate = useNavigate();
@@ -38,7 +46,7 @@ function CreateEventForm({ mode }: FormProps) {
   };
 
   return (
-    <div className="create-event">
+    <>
       <form onSubmit={HandleSubmit}>
         <h2> create new event </h2>
         <label>title</label>
@@ -51,31 +59,32 @@ function CreateEventForm({ mode }: FormProps) {
           }}
         />
         <label>descraption</label>
-        <input
+        <TextField
           type="text"
           name="descraption"
           onChange={(e: any) => HandleChange(e)}
           value={state.descraption}
         />
         <label>date</label>
-        <input
+        <TextField
           type="date"
           name="date"
           onChange={(e: any) => HandleChange(e)}
           value={state.date}
         />
         <label>location</label>
-        <input
+        <TextField
           type="text"
           name="location"
           onChange={(e: any) => HandleChange(e)}
           value={state.location}
+          style={{ width: 10, height: 2 }}
         />
         <button className="submit-btn" type="submit">
           shoot
         </button>
       </form>
-    </div>
+    </>
   );
 }
 

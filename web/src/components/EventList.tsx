@@ -16,11 +16,7 @@ import EditButton from "./buttons/EditButton";
 import useFeed from "../hooks/useFeed";
 import ViewButton from "./buttons/ViewButton";
 
-const Title = styled.h1`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import Title from "./styledComponents/Title";
 
 const CustomizedTableRow = styled(TableRow)`
   @keyframes fadeIn {
@@ -64,7 +60,7 @@ function FeedPage() {
                   <Stack spacing={2} direction="row">
                     <EditButton id={event.eventId._id} />
                     <ViewButton id={event.eventId._id} />
-                    <DeleteButton id={event.eventId._id} />
+                    <DeleteButton id={event.eventId._id} target={"feed"} />
                   </Stack>
                 </TableCell>
               </CustomizedTableRow>

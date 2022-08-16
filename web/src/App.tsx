@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import CreateEventPage from "./pages/CreateEventPage";
 import UpdateEventPage from "./pages/UpdateEventPage";
 import ViewEventPage from "./pages/ViewEventPage";
+import UserPage from "./pages/UserPage";
 
 const GlobalStyle = createGlobalStyle`
 @media screen and (min-width: 480px) {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/feed/create-event" element={<CreateEventPage />} />
         <Route path="/feed/view/:id" element={<ViewEventPage />} />
         <Route path="/feed/update-event/:id" element={<UpdateEventPage />} />
+        <Route path="/user/:id" element={<UserPage />} />
       </Routes>
     </React.Fragment>
   );

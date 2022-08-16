@@ -11,7 +11,7 @@ const authMiddleware =
   (store: any) => (next: any) => (action: ILoginAction) => {
     if (AuthActions.login.match(action)) {
       // Note: localStorage expects a string
-      localStorage.setItem("isAuthenticated", "true");
+      // localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("token", action.payload);
     }
     // else if (AuthActions.logout.match(action)) {

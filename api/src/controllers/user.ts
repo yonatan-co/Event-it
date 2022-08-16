@@ -33,48 +33,48 @@ export default {
       handle(next, err);
     }
   },
-  updateEvent: async (
-    req: AutherizedRequest,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const notAuthorized = await isAuthorized(req);
-      if (notAuthorized) {
-        throw notAuthorized;
-      }
+  // updateEvent: async (
+  //   req: AutherizedRequest,
+  //   res: Response,
+  //   next: NextFunction
+  // ) => {
+  //   try {
+  //     const notAuthorized = await isAuthorized(req);
+  //     if (notAuthorized) {
+  //       throw notAuthorized;
+  //     }
 
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        const error: Error = new Error("Validation failed");
-        error.name = "ValidationFailed";
-        throw error;
-      }
+  //     const errors = validationResult(req);
+  //     if (!errors.isEmpty()) {
+  //       const error: Error = new Error("Validation failed");
+  //       error.name = "ValidationFailed";
+  //       throw error;
+  //     }
 
-      const userId = req.params.userId;
-      const user = await User.findById(userId);
+  //     const userId = req.params.userId;
+  //     const user = await User.findById(userId);
 
-      if (!user) {
-        const error: Error = new Error("no event found");
-        error.name = "NotFound";
-        throw error;
-      }
+  //     if (!user) {
+  //       const error: Error = new Error("no event found");
+  //       error.name = "NotFound";
+  //       throw error;
+  //     }
 
-      const error = allowedToModify(req, user);
-      if (error) {
-        throw error;
-      }
+  //     const error = allowedToModify(req, user);
+  //     if (error) {
+  //       throw error;
+  //     }
 
-      user.username = req.body.username;
-      const updateduser = await user.save();
-      res.status(200).json({
-        message: "event updated",
-        user: updateduser,
-      });
-    } catch (err: any) {
-      handle(next, err);
-    }
-  },
+  //     user.username = req.body.username;
+  //     const updateduser = await user.save();
+  //     res.status(200).json({
+  //       message: "event updated",
+  //       user: updateduser,
+  //     });
+  //   } catch (err: any) {
+  //     handle(next, err);
+  //   }
+  // },
   deleteUser: async (
     req: AutherizedRequest,
     res: Response,

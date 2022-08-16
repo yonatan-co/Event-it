@@ -12,3 +12,6 @@ export type EventRequestBody = {
 export type FormProps = {
   mode: string;
 };
+
+// target of delete button
+export type DeleteTarget = "feed" | "user";

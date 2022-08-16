@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/:userId", isAuth, controller.singleUser);
 
-router.patch("/update/:userId", isAuth, controller.updateEvent);
+// router.patch("/update/:userId", isAuth, controller.updateEvent);
 
 router.delete("/delete/:userId", isAuth, controller.deleteUser);
 

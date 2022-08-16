@@ -20,6 +20,7 @@ const useLogin = () => {
       })) as IResponse;
       const resData = await res.json();
       dispatch(AuthActions.login(resData.token));
+      localStorage.setItem("userId", resData.userId);
       setSuccess(true);
       return success;
     } catch (err: any) {

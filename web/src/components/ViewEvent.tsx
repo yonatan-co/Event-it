@@ -10,11 +10,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 
 import styled from "styled-components";
 
-const Title = styled.h1`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import Title from "./styledComponents/Title";
 
 const CustomizedImage = styled(ImageListItem)`
   text-decoration: none;

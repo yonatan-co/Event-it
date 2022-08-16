@@ -33,7 +33,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="login-page">
+    <>
       <form className="login" onSubmit={HandleSubmit}>
         <h3>Login</h3>
 
@@ -54,7 +54,7 @@ export function LoginForm() {
 
         <button>Sign up</button>
       </form>
-    </div>
+    </>
   );
 }
 
