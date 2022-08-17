@@ -49,11 +49,6 @@ function ViewEvent() {
                 alt={photo[0]}
                 loading="lazy"
               />
-              <ImageListItemBar
-                title={item.title}
-                subtitle={<span>by: {item.author}</span>}
-                position="below"
-              />
             </CustomizedImage>
           ))}
         </ImageList>

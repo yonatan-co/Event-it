@@ -33,6 +33,7 @@ const CustomizedTableRow = styled(TableRow)`
 
 function FeedPage() {
   const { events, error, isPending } = useFeed();
+  console.log(events);
   return (
     <div className="homepage">
       <Title>events</Title>
