@@ -7,6 +7,7 @@ import UploadImageButton from "./buttons/UploadImageButton";
 
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 import styled from "styled-components";
 
@@ -47,6 +48,11 @@ function ViewEvent() {
                 srcSet={`http://localhost:8080/${photo[0]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={photo[0]}
                 loading="lazy"
+              />
+              <ImageListItemBar
+                title={item.title}
+                subtitle={<span>by: {item.author}</span>}
+                position="below"
               />
             </CustomizedImage>
           ))}

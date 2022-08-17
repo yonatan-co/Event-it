@@ -12,12 +12,13 @@ const authMiddleware =
     if (AuthActions.login.match(action)) {
       // Note: localStorage expects a string
       // localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("isAuth", "true");
       localStorage.setItem("token", action.payload);
+    } else if (AuthActions.logout.match(action)) {
+      localStorage.setItem("isAuth", "false");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
     }
-    // else if (AuthActions.logout.match(action)) {
-    //   localStorage.setItem("isAuthenticated", "false");
-    //   localStorage.setItem("token", "");
-    // }
     return next(action);
   };
 

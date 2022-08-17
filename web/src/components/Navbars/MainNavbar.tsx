@@ -10,10 +10,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import AddIcon from "@mui/icons-material/Add";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Stack from "@mui/material/Stack";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -54,7 +55,10 @@ export default function TemporaryDrawer() {
             <ListItemButton>
               <ListItemIcon>
                 <Link to={"/user/" + userId}>
-                  <PersonIcon />
+                  <Stack direction={"row"}>
+                    <PersonIcon />
+                    Profile
+                  </Stack>
                 </Link>
               </ListItemIcon>
               <ListItemText />
@@ -64,16 +68,32 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Link to={"/feed/create-event/"}>
+                <Stack direction={"row"}>
+                  <AddIcon />
+                  Create Event
+                </Stack>
+              </Link>
+            </ListItemIcon>
+            <ListItemText />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Link to={"/logout"}>
+                <Stack direction={"row"}>
+                  <LogoutIcon />
+                  Logout
+                </Stack>
+              </Link>
+            </ListItemIcon>
+            <ListItemText />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -81,16 +101,16 @@ export default function TemporaryDrawer() {
   return (
     <div>
       {
-        <React.Fragment key="right">
-          <Button onClick={toggleDrawer("right", true)}>
+        <React.Fragment key="left">
+          <Button onClick={toggleDrawer("left", true)}>
             <MenuIcon />
           </Button>
           <Drawer
-            anchor={"right"}
-            open={state["right"]}
-            onClose={toggleDrawer("right", false)}
+            anchor={"left"}
+            open={state["left"]}
+            onClose={toggleDrawer("left", false)}
           >
-            {list("right")}
+            {list("left")}
           </Drawer>
         </React.Fragment>
       }

@@ -12,6 +12,7 @@ import CreateEventPage from "./pages/CreateEventPage";
 import UpdateEventPage from "./pages/UpdateEventPage";
 import ViewEventPage from "./pages/ViewEventPage";
 import UserPage from "./pages/UserPage";
+import LogoutPage from "./pages/LogoutPage";
 
 const GlobalStyle = createGlobalStyle`
 @media screen and (min-width: 480px) {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/feed/create-event" element={<CreateEventPage />} />
         <Route path="/feed/view/:id" element={<ViewEventPage />} />
